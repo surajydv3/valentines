@@ -694,11 +694,11 @@
         // Check if a day is unlocked
         function isDayUnlocked(day) {
             // LOCKING DISABLED - All days are unlocked for testing/preview
-            return true;
+            // return true;
             
             // TO RE-ENABLE LOCKING: Comment out the line above and uncomment below:
-            // const now = new Date();
-            // return now >= day.unlockDate;
+            const now = new Date();
+            return now >= day.unlockDate;
         }
 
         // Get time remaining until unlock
