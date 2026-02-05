@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Story ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d4145a;
+            --secondary: #fbb1bd;
+            --accent: #ff6b9d;
+            --dark: #2d1b2e;
+            --light: #fff5f7;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.6;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(100px, -100px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-50px, -200px) rotate(240deg);
+            }
+        }
+
+        /* Main container */
+        .app {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        /* Landing page */
+        .landing {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d1b2e 50%, #3d1e3d 100%);
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+
+        .landing.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .landing h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b9d, #fbb1bd, #d4145a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.8));
+            }
+        }
+
+        .landing p {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            padding: 1.5rem 4rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(212, 20, 90, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(212, 20, 90, 0.6);
+        }
+
+        /* Timeline page */
+        .timeline-container {
+            display: none;
+            opacity: 0;
+            min-height: 100vh;
+            padding: 2rem;
+            transition: opacity 0.8s ease;
+        }
+
+        .timeline-container.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .timeline-header {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .timeline-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #ff6b9d, #fbb1bd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timeline-header p {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-top: 1rem;
+            font-weight: 300;
+        }
+
+        .week-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 3rem 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 45%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .timeline-content.locked {
+            cursor: not-allowed;
+            opacity: 0.6;
+            filter: grayscale(0.7);
+        }
+
+        .timeline-content.locked:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 107, 157, 0.3);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .timeline-content:not(.locked):hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(212, 20, 90, 0.3);
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+
+        .unlock-countdown {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 4px solid var(--dark);
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.8);
+            z-index: 2;
+        }
+
+        .day-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .day-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .day-preview {
+            color: var(--secondary);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Individual day page */
+        .day-page {
+            display: none;
+            opacity: 0;
+            min-height: 100vh;
+            padding: 2rem;
+            transition: opacity 0.8s ease;
+        }
+
+        .day-page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .day-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 30px;
+            padding: 4rem;
+            animation: fadeInScale 0.8s ease;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .day-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #ff6b9d, #fbb1bd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .day-date {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 3rem;
+        }
+
+        .day-story {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .day-memory {
+            background: linear-gradient(135deg, rgba(212, 20, 90, 0.2), rgba(255, 107, 157, 0.2));
+            padding: 2rem;
+            border-radius: 20px;
+            border-left: 4px solid var(--accent);
+            font-style: italic;
+            margin: 2rem 0;
+        }
+
+        .day-photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .photo-placeholder {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(251, 177, 189, 0.2));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 2px dashed rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .photo-placeholder:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(251, 177, 189, 0.3));
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        /* Navigation arrows */
+        .day-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 107, 157, 0.3);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover:not(:disabled) {
+            transform: translateX(-5px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Locked modal */
+        .locked-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .locked-modal.show {
+            display: flex;
+        }
+
+        .locked-modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 107, 157, 0.5);
+            border-radius: 30px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); }
+            to { transform: scale(1); }
+        }
+
+        .locked-modal-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .locked-modal h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .locked-modal p {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .countdown-timer {
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin: 1.5rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .close-modal-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 20, 90, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .landing h1 {
+                font-size: 3.5rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                padding-left: 60px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .day-content {
+                padding: 2rem;
+            }
+
+            .day-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <div class="app">
+        <!-- Landing Page -->
+        <section class="landing" id="landing">
+            <h1>For Isha ❤️</h1>
+            <p style="font-size: 1.5rem; max-width: 650px; margin: 0 auto 2rem; line-height: 1.8; font-weight: 300;">
+                In a world of ordinary moments,<br>
+                you turned every second into magic.<br>
+                This week isn't just about Valentine's Day—<br>
+                it's about celebrating <span style="color: var(--accent); font-weight: 600;">us</span>,<br>
+                the little things that make my heart skip,<br>
+                and all the ways you've made me believe<br>
+                that love is the most beautiful adventure.
+            </p>
+            <p style="font-size: 1.3rem; color: var(--accent); font-style: italic; margin-bottom: 3rem;">
+                Seven days. Seven love letters. All for you.
+            </p>
+            <button class="start-btn" onclick="startJourney()">Open Your Heart ❤️</button>
+        </section>
+
+        <!-- Timeline Page -->
+        <section class="timeline-container" id="timelineContainer">
+            <div class="timeline-header">
+                <h2>Valentine's Week 2026</h2>
+                <p>7 Days, 7 Ways to Say I Love You</p>
+                <div class="week-subtitle">February 7 - February 14</div>
+            </div>
+
+            <div class="timeline" id="timeline"></div>
+        </section>
+
+        <!-- Day Pages (dynamically generated) -->
+        <div id="dayPages"></div>
+
+        <!-- Locked Modal -->
+        <div class="locked-modal" id="lockedModal">
+            <div class="locked-modal-content">
+                <div class="locked-modal-icon">🔒</div>
+                <h3>This Day is Locked</h3>
+                <p id="lockedMessage">This special day will unlock soon!</p>
+                <div class="countdown-timer" id="countdownTimer"></div>
+                <button class="close-modal-btn" onclick="closeLockedModal()">Okay ❤️</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Valentine's Week Days - CUSTOMIZE THE MESSAGES!
+        const days = [
+            {
+                id: 1,
+                title: "Rose Day 🌹",
+                date: "February 7, 2026",
+                unlockDate: new Date('2026-02-07T00:00:00'),
+                preview: "Like a rose, you bloomed in my life...",
+                story: "Isha, if I could describe you as a flower, you'd be a rose in full bloom on a spring morning. Delicate, yet impossibly strong. Beautiful in ways that words fail to capture. You walked into my life and suddenly everything had color, fragrance, purpose. Every petal of this rose represents a reason I love you, and I could fill an entire garden with them.",
+                memory: "Your beauty isn't just in how you look – though you take my breath away – it's in how you make everyone around you feel seen, valued, loved. You bloom wherever you go, Isha, and I'm the luckiest person to witness it every day.",
+                photos: 0
+            },
+            {
+                id: 2,
+                title: "Propose Day 💍",
+                date: "February 8, 2026",
+                unlockDate: new Date('2026-02-08T00:00:00'),
+                preview: "The question I ask every day...",
+                story: "Isha, they say you should only propose once, but I think that's wrong. I want to choose you every single day. So here's my question, asked with all my heart: Will you let me love you today? Tomorrow? For all the tomorrows we get? Will you let me be the person who makes you coffee, holds your hand, celebrates your wins, and catches you when you fall?",
+                memory: "You've already said yes in a thousand wordless ways – in your laughter, your trust, the way you look at me when you think I'm not watching. But I'll never stop asking, because choosing you, Isha, is the easiest and best decision I make every single day.",
+                photos: 0
+            },
+            {
+                id: 3,
+                title: "Chocolate Day 🍫",
+                date: "February 9, 2026",
+                unlockDate: new Date('2026-02-09T00:00:00'),
+                preview: "You're sweeter than any chocolate...",
+                story: "Isha, people say chocolate is the ultimate comfort food, that it releases endorphins and makes you happy. But they've clearly never met you. Your smile is more addictive than any chocolate. Your presence brings more warmth than the richest hot cocoa. And your love? That's the sweetness I crave every single moment.",
+                memory: "Life with you is like unwrapping a truffle – every layer reveals something more beautiful, more surprising, more delicious than the last. You're my favorite indulgence, my sweetest addiction, the taste I never want to forget.",
+                photos: 0
+            },
+            {
+                id: 4,
+                title: "Teddy Day 🧸",
+                date: "February 10, 2026",
+                unlockDate: new Date('2026-02-10T00:00:00'),
+                preview: "My comfort, my warmth, my home...",
+                story: "Isha, I wish I could hold you every second of every day. Your hugs are where I find peace after chaos, warmth after cold, home after wandering. Until I can wrap my arms around you, here's something to remind you – you're never alone, you're always loved, and somewhere, I'm thinking of you and wishing I was there.",
+                memory: "But honestly, no teddy bear could ever replace you. Because it's not just your embrace I cherish – it's your heartbeat against mine, your breath in sync with mine, the way you fit perfectly in my arms like you were made to be there. You're my comfort, Isha, in every sense of the word.",
+                photos: 0
+            },
+            {
+                id: 5,
+                title: "Promise Day 🤝",
+                date: "February 11, 2026",
+                unlockDate: new Date('2026-02-11T00:00:00'),
+                preview: "Promises written in my heart...",
+                story: "Isha, today I promise you everything I am and everything I hope to be. I promise to love you on your worst days, when you don't feel lovable. I promise to celebrate you on your best days, when the world finally sees what I've always known. I promise to hold space for your dreams, to be your safe place to fall, your loudest cheerleader, your softest landing.",
+                memory: "I promise to choose patience over pride, understanding over being right, us over everything else. I promise that when life gets hard – and it will – I'll be the one holding your hand in the dark, reminding you that we're in this together. These aren't just words, Isha. They're vows I make to you, renewed every sunrise.",
+                photos: 0
+            },
+            {
+                id: 6,
+                title: "Hug Day 🤗",
+                date: "February 12, 2026",
+                unlockDate: new Date('2026-02-12T00:00:00'),
+                preview: "In your arms, I found home...",
+                story: "Isha, your hugs are my favorite place in this entire world. Not fancy restaurants, not exotic destinations, not anywhere else – just your arms. In your embrace, the world stops spinning. My anxious thoughts quiet down. Everything that was wrong somehow feels fixable. You hold me like I'm something precious, and in those moments, I believe I am.",
+                memory: "I've memorized every type of hug you give – the excited ones when something good happens, the gentle ones when you know I need comfort, the spontaneous ones just because, the long ones that say 'I missed you' without words. Each one is a poem, Isha, and I'm collecting them all in my heart.",
+                photos: 0
+            },
+            {
+                id: 7,
+                title: "Valentine's Day ❤️",
+                date: "February 14, 2026",
+                unlockDate: new Date('2026-02-14T00:00:00'),
+                preview: "My forever Valentine...",
+                story: "Isha, we've reached the end of Valentine's Week, but really, it's just another beginning. Because loving you isn't something I do just this week, or just today. It's what I do every morning when I wake up thinking of you, every night when you're my last thought, every moment in between when something reminds me of you (which is everything, by the way).",
+                memory: "Thank you for being exactly who you are – brilliant, kind, funny, strong, vulnerable, real. Thank you for letting me love you, for loving me back, for building this beautiful thing with me called 'us'. You're not just my Valentine, Isha. You're my favorite person, my best decision, my greatest adventure, my home. Here's to us, to this moment, and to all the moments still waiting for us. I love you more than words could ever say, but I'll spend forever trying to show you. Happy Valentine's Day, my love. ❤️",
+                photos: 0
+            }
+        ];
+
+        // Check if a day is unlocked
+        function isDayUnlocked(day) {
+            // LOCKING DISABLED - All days are unlocked for testing/preview
+            return true;
+            
+            // TO RE-ENABLE LOCKING: Comment out the line above and uncomment below:
+            // const now = new Date();
+            // return now >= day.unlockDate;
+        }
+
+        // Get time remaining until unlock
+        function getTimeUntilUnlock(day) {
+            const now = new Date();
+            const diff = day.unlockDate - now;
+            
+            if (diff <= 0) return null;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            if (days > 0) {
+                return `${days} day${days > 1 ? 's' : ''} ${hours} hour${hours > 1 ? 's' : ''}`;
+            } else if (hours > 0) {
+                return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''}`;
+            } else {
+                return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+            }
+        }
+
+        // Format unlock date nicely
+        function formatUnlockDate(date) {
+            const options = { month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Show locked modal
+        function showLockedModal(day) {
+            const modal = document.getElementById('lockedModal');
+            const message = document.getElementById('lockedMessage');
+            const countdown = document.getElementById('countdownTimer');
+            
+            const timeRemaining = getTimeUntilUnlock(day);
+            
+            message.textContent = `${day.title} will unlock on ${formatUnlockDate(day.unlockDate)}. Get ready for something special!`;
+            
+            if (timeRemaining) {
+                countdown.textContent = `Unlocks in: ${timeRemaining}`;
+            } else {
+                countdown.textContent = '';
+            }
+            
+            modal.classList.add('show');
+        }
+
+        // Close locked modal
+        function closeLockedModal() {
+            document.getElementById('lockedModal').classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('lockedModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLockedModal();
+            }
+        });
+
+        // Create floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('bgAnimation');
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Start the journey
+        function startJourney() {
+            document.getElementById('landing').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('landing').style.display = 'none';
+                document.getElementById('timelineContainer').classList.add('active');
+            }, 800);
+        }
+
+        // Generate timeline
+        function generateTimeline() {
+            const timeline = document.getElementById('timeline');
+            days.forEach((day, index) => {
+                const isUnlocked = isDayUnlocked(day);
+                const lockedClass = isUnlocked ? '' : 'locked';
+                const lockIcon = isUnlocked ? '' : '<div class="lock-overlay">🔒</div>';
+                const countdown = isUnlocked ? '' : `<div class="unlock-countdown">Unlocks: ${day.date}</div>`;
+                
+                const item = document.createElement('div');
+                item.className = 'timeline-item';
+                item.innerHTML = `
+                    <div class="timeline-content ${lockedClass}" onclick="openDay(${day.id})">
+                        <div class="day-number">Day ${day.id}</div>
+                        <div class="day-title">${day.title}</div>
+                        <div class="day-preview">${day.preview}</div>
+                        ${countdown}
+                        ${lockIcon}
+                    </div>
+                    <div class="timeline-dot"></div>
+                `;
+                timeline.appendChild(item);
+            });
+        }
+
+        // Generate day pages
+        function generateDayPages() {
+            const container = document.getElementById('dayPages');
+            days.forEach(day => {
+                const page = document.createElement('section');
+                page.className = 'day-page';
+                page.id = `day-${day.id}`;
+                
+                let photosHTML = '';
+                if (day.photos > 0) {
+                    photosHTML = '<div class="day-photos">';
+                    for (let i = 0; i < day.photos; i++) {
+                        photosHTML += '<div class="photo-placeholder">📷</div>';
+                    }
+                    photosHTML += '</div>';
+                }
+
+                const currentIndex = days.findIndex(d => d.id === day.id);
+                const hasPrev = currentIndex > 0;
+                const hasNext = currentIndex < days.length - 1;
+
+                page.innerHTML = `
+                    <button class="back-btn" onclick="backToTimeline()">← Back to Timeline</button>
+                    <div class="day-content">
+                        <h1>${day.title}</h1>
+                        <div class="day-date">${day.date}</div>
+                        <div class="day-story">${day.story}</div>
+                        <div class="day-memory">
+                            💭 ${day.memory}
+                        </div>
+                        ${photosHTML}
+                        <div class="day-navigation">
+                            <button class="nav-btn prev" ${!hasPrev ? 'disabled' : ''} onclick="navigateDay(${day.id - 1})">
+                                ← Previous Day
+                            </button>
+                            <button class="nav-btn next" ${!hasNext ? 'disabled' : ''} onclick="navigateDay(${day.id + 1})">
+                                Next Day →
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(page);
+            });
+        }
+
+        // Navigate to specific day
+        function openDay(dayId) {
+            const day = days.find(d => d.id === dayId);
+            
+            // Check if day is locked
+            if (!isDayUnlocked(day)) {
+                showLockedModal(day);
+                return;
+            }
+            
+            document.getElementById('timelineContainer').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById(`day-${dayId}`).classList.add('active');
+            }, 300);
+        }
+
+        // Navigate between days
+        function navigateDay(dayId) {
+            const day = days.find(d => d.id === dayId);
+            
+            // Check if day is locked
+            if (!isDayUnlocked(day)) {
+                showLockedModal(day);
+                return;
+            }
+            
+            const currentDay = document.querySelector('.day-page.active');
+            currentDay.classList.remove('active');
+            setTimeout(() => {
+                document.getElementById(`day-${dayId}`).classList.add('active');
+            }, 300);
+        }
+
+        // Back to timeline
+        function backToTimeline() {
+            const currentDay = document.querySelector('.day-page.active');
+            if (currentDay) {
+                currentDay.classList.remove('active');
+            }
+            setTimeout(() => {
+                document.getElementById('timelineContainer').classList.add('active');
+            }, 300);
+        }
+
+        // Initialize
+        createFloatingHearts();
+        generateTimeline();
+        generateDayPages();
+
+        // Auto-refresh timeline every minute to update lock status
+        setInterval(() => {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+            generateTimeline();
+        }, 60000); // Refresh every minute
+    </script>
+</body>
+</html>
